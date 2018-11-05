@@ -9,3 +9,27 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+download.file("http://www.openintro.org/stat/data/bdims.RData", destfile =
+"bdims.RData")
+load("bdims.RData")
+```
+
+```{r}
+head(bdims)
+```
+
+```{r}
+mdims <- subset(bdims, bdims$sex == 1)
+fdims <- subset(bdims, bdims$sex == 0)
+```
+
+➡ Exercise 1: Generate separate histograms of the men’s and women’s heights. Then,
+compare and contrast the center, spread, and shape of these two height distributions. (Hint:
+It would be advisable to also generate summary statistics so that you can quantify the
+center and spread of these distributions.)
+
+```{r}
+
+```
+
