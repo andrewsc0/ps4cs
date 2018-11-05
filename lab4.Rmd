@@ -140,6 +140,7 @@ qqline(fdims$elb.di)
 
 2. Note that normal probability plot D has a slight stepwise pattern. Why do you think this is the case?
 
+Because in this case the variable we are looking at is discrete in the way it is given to us. The variable (age) is a continuous variable because every second/millisecond/nanosecond etc we are getting older. But in this case the age is just give in years and is represented as a discrete variable. If we were getting it in continuous form then it would be less of a stair step pattern.
 
 3. As you can see, normal probability plots can be used both to assess normality and visualize skewness.
 Produce a normal probability plot for female knee diameter (kne.di). Based on this normal probability
