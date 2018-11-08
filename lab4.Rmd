@@ -2,12 +2,14 @@
 title: "lab4"
 author: "Christopher Andrews"
 date: "11/4/2018"
-output: html_document
+output:
+  html_document: default
 ---
 
-```{r setup, include=FALSE,cache=true}
-#knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE,cache="true"}
 set.seed(878)
+knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ```{r}
@@ -50,6 +52,7 @@ x <- 150:200
 y <- dnorm(x = x, mean = mhgtmean, sd = mhgtsd)
 lines(x = x, y = y, col = "blue")
 ```
+
 Exercise 2: Based on this plot, does it appear that the men's height data follow a nearly normal
 distribution? Explain.
 Based on this visual there is evidence to suggest that it follows a close to normal distribution.
@@ -65,12 +68,12 @@ sim_norm <- rnorm(n = length(mdims$hgt), mean = mhgtmean, sd = mhgtsd)
 ```
 ??? Exercise 3: Make a normal (Q-Q) probability plot of sim_norm. Do all of the points fall
 on the line? How does this plot compare to the normal probability plot for the actual data?
-No, not all the points fall on the line, there are some deviations. But the trend follows the line pretty closely, for the most part and it is safe to assume that this simulation (sim_norm) represents a bienak distribution. Not so suprisingly, this line is somewhat close to the actual data, seen above.
+No, not all the points fall on the line, there are some deviations. But the trend follows the line pretty closely, for the most part and it is safe to assume that this simulation (sim_norm) represents a normal distribution. Not so suprisingly, this line is somewhat close to the actual data, seen above.
 ```{r}
 qqnorm(sim_norm)
 qqline(sim_norm)
 ```
-```{r, fig.height = 10, fig.width = 8}}
+```{r, fig.height = 10, fig.width = 8}
 qqnormsim(mdims$hgt)
 ```
 
@@ -83,7 +86,7 @@ Exercise 5: Using the same procedure you used to judge the normality of the male
 data in Exercises 2 through 4, explain your judgment as to whether or not the male weights
 appear to come from a normal distribution. 
 They do appear to come from a normal distribution, but in the simulation, the plot is more densly populated on the theoretical line as it gets closer to 0 on the x-axis.
-```{r, fig.height = 10, fig.width = 8}}
+```{r, fig.height = 10, fig.width = 8}
 qqnorm(mdims$wgt)
 qqline(mdims$wgt)
 ```
@@ -108,20 +111,36 @@ reasoning by comparing each empirical distribution to the corresponding theoreti
 distribution
 Question 1. Male heights greater than 6 feet
 ```{r}
-SixFtInCM <- 72*2.54
+SixFtInCM <- 72*2.54 #convert to CM
 maleMean <- mean(mdims$hgt)
 maleSD <- sd(mdims$hgt)
 ```
 
 ```{r}
-
-pnorm(q = SixFtInCM, mean = maleMean, sd = maleSD)
+1-pnorm(q = SixFtInCM, mean = maleMean, sd = maleSD)
 ```
 ```{r}
 sum(mdims$hgt > SixFtInCM)/length(mdims$hgt)
 ```
+We are able to find a close approximation through both of these measures because males heights are distributed normally.
+It shows in this sample about 25 percent of men are taller than 6ft tall.
+This is normal, which is shown by the closeness of the two calculations.
 
+Question 2. male weights less than 155 lbs.
+```{r}
+WeightInKG <- 155/2.205 #convert to kg
+maleWgtMean <- mean(mdims$wgt)
+maleWgtSD <- sd(mdims$wgt)
+```
 
+```{r}
+pnorm(q = WeightInKG, mean = maleWgtMean, sd = maleWgtSD)
+```
+```{r}
+sum(mdims$wgt < WeightInKG)/length(mdims$wgt)
+```
+Once again, we are able to find a close approximation through these measures with regards to male weights, in this case it was mens weights who are less than 155 lbs, and in this sample that comes to about 23 percent.
+This is normal, which is seen by the clseness of the two calculations.
 Homework Assignment
 1. Now let's consider some of the other variables in the body dimensions data set. Using the figures on the
 next page, match each histogram to its normal probability plot. All of the variables have been
@@ -132,23 +151,23 @@ be of any help. If you are uncertain based on these figures, you can generate th
   3) B
   4) C
 ```{r}
-hist(bdims$age)
+hist(bdims$age, main = "Total age", xlab = "Age")
 qqnorm(bdims$age)
 qqline(bdims$age)
 ```
 ```{r}
-hist(fdims$che.de)
+hist(fdims$che.de, main = "Chest Depth Diameter", xlab = "Diameter")
 qqnorm(fdims$che.de)
 qqline(fdims$che.de)
 ```
 ```{r}
-hist(fdims$bii.di)
+hist(fdims$bii.di, main = "Billiac Diameter", xlab = "Diameter")
 qqnorm(fdims$bii.di)
 qqline(fdims$bii.di)
 ```
 
 ```{r}
-hist(fdims$elb.di)
+hist(fdims$elb.di, main = "Elbow Diameter", xlab = "Diameter")
 qqnorm(fdims$elb.di)
 qqline(fdims$elb.di)
 ```
@@ -166,6 +185,6 @@ The plot of this variable is right skewed. You can see this by the plot on the h
 
 qqnorm(fdims$kne.di)
 qqline(fdims$kne.di)
-hist(fdims$kne.di)
+hist(fdims$kne.di, main = "Knee Diameter", xlab = "Diameter")
 ```
 
