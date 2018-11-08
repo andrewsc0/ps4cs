@@ -1,0 +1,128 @@
+---
+title: 'Lab4: Normal Probability Distributions'
+author: "Quentin Terry"
+date: "October 28, 2018"
+output: pdf_document
+---
+```{r setup, include=FALSE, cache=TRUE}
+set.seed(001)
+```
+
+```{r}
+download.file("http://www.openintro.org/stat/data/bdims.RData", destfile =
+"bdims.RData")
+load("bdims.RData")
+```
+
+```{r}
+head(bdims)
+```
+
+##Exercise 1: Generate separate histograms of the men's and women's heights. Then, compare and contrast the center, spread, and shape of these two height distributions. (Hint: It would be advisable to also generate summary statistics so that you can quantify the center and spread of these distributions.)
+
+```{r}
+mdims <- subset(bdims, bdims$sex == 1)
+
+fdims <- subset(bdims, bdims$sex == 0)
+
+hist(mdims$hgt, xlab = "Height", main = "Histogram of men's height")
+
+hist(fdims$hgt, xlab = "Height", main = "Histogram of female's height")
+
+
+summary(mdims$hgt)
+
+summary(fdims$hgt)
+
+sd(mdims$hgt)
+
+sd(fdims$hgt)
+```
+
+- The mens shape is more normal than females, however both male and females shapes are symetric. The center for the males is 177.8 whereas the females center is 164.5 meaning that the females heignt on average is less than the males height. Also the spread of the females height is 6.544602 which is less than the males at 7.183629 meaning that 
+
+```{r}
+mhgtmean <- mean(mdims$hgt)
+
+mhgtsd <- sd(mdims$hgt)
+
+```
+
+
+```{r}
+hist(mdims$hgt, probability = TRUE, ylim = c(0,0.1), main = "Histogram of Male Height", xlab = "Height")
+
+x <- 150:200
+
+y <- dnorm(x = x, mean = mhgtmean, sd = mhgtsd)
+
+lines(x = x, y = y, col = "blue")
+```
+
+##Exercise 2: Based on this plot, does it appear that the men's height data follow a nearly normal distribution? Explain.
+
+- Based on the plot, The histogram seems like a bell- shaped curve. Therefore, It apears that the men's height follows a nearly normal distribution.
+
+```{r}
+qqnorm(mdims$hgt)
+
+qqline(mdims$hgt)
+
+sim_norm <- rnorm(n = length(mdims$hgt), mean = mhgtmean, sd = mhgtsd)
+```
+
+##Exercise 3: Make a normal (Q-Q) probability plot of sim_norm. Do all of the points fall on the line? How does this plot compare to the normal probability plot for the actual data?
+
+```{r}
+qqnorm(sim_norm)
+qqline(sim_norm)
+
+```
+
+- All the points do not fall on the line but are close to the line. This plot is more linear than the actual data plot even though all the points of the simulated plot do not fall on the line.
+
+```{r, fig.height = 10, fig.width = 8}
+
+qqnormsim(mdims$hgt)
+
+```
+
+##Exercise 4: Does the normal probability plot for mdims$hgt look similar to the plots created for the simulated data? That is, do the plots provide evidence that the male heights are nearly normal? Explain.
+
+- The normal plot for male heights is very similar to the simulated data. However, The original data has a stairstep shape to it. 
+
+##Exercise 5: Using the same procedure you used to judge the normality of the male height data in Exercises 2 through 4, explain your judgment as to whether or not the male weights appear to come from a normal distribution. 
+
+```{r, fig.height = 10, fig.width = 8}
+qqnormsim(mdims$wgt)
+```
+
+- Male weights apear to not come from a normal distribution due to the fact that due to the right tail being longer than what a normal distribution would look like.
+
+##Exercise 6: Write out two probability questions that you would like to answer - one regarding male heights and one regarding male weights. Calculate those probabilities using both the theoretical normal distribution as well as the empirical distribution (four probabilities in all). Which variable, height or weight, is closer to normal? Explain your reasoning by comparing each empirical distribution to the corresponding theoretical normal distribution.
+???
+###Homework Assignment
+##1. Now let's consider some of the other variables in the body dimensions data set. Using the figures on the next page, match each histogram to its normal probability plot. All of the variables have been standardized (by first subtractig the mean, and then dividing by the standard deviation), so the units won't be of any help. If you are uncertain based on these figures, you can generate the plots in R to check. (1) The histogram for general (i.e., male and female) age (age) corresponds to normal probability plot letter __. (2) The histogram for female chest depth (che.de) corresponds to normal probability plot letter __. (3) The histogram for female biiliac (pelvic) diameter (bii.di) corresponds to normal probability plot letter __. (4) The histogram for female elbow diameter (elb.di) corresponds to normal probability plot letter __
+
+- 1) D
+  2) A
+  3) B
+  4) C
+  
+##2. Note that normal probability plot D has a slight stepwise pattern. Why do you think this is the case?
+
+- This is due to the numbers used in the plot. because in the plot, age uses discrete values instead of continuous values, This creates the stepwise pattern. 
+
+##3. As you can see, normal probability plots can be used both to assess normality and visualize skewness. Produce a normal probability plot for female knee diameter (kne.di). Based on this normal probability plot, is this variable left skewed, symmetric, or right skewed? Explain your reasoning. Use a histogram to confirm your findings. 
+
+```{r}
+qqnorm(fdims$kne.di)
+qqline(fdims$kne.di)
+```
+
+- Based on the plot this variable is right skewed. 
+
+```{r}
+hist(fdims$kne.di, main = "Histogram of female knee dimension", xlab = "Female Knee")
+```
+
