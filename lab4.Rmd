@@ -3,6 +3,7 @@ title: "lab4"
 author: "Christopher Andrews"
 date: "11/4/2018"
 output:
+  word_document: default
   html_document: default
 ---
 
