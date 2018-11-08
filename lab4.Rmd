@@ -34,9 +34,9 @@ For the female distribution is slightly skewed to the left, but could be seen as
 
 
 ```{r}
-hist(mdims$hgt)
+hist(mdims$hgt, main = "Male Heights", xlab = "height" )
 summary(mdims$hgt)
-hist(fdims$hgt)
+hist(fdims$hgt, main = "Female heights", xlab = "height")
 summary(fdims$hgt)
 ```
 
@@ -45,14 +45,14 @@ mhgtmean <- mean(mdims$hgt)
 mhgtsd <- sd(mdims$hgt)
 ```
 ```{r}
-hist(mdims$hgt, probability = TRUE, ylim = c(0,0.1))
+hist(mdims$hgt, probability = TRUE, ylim = c(0,0.1), xlab = "new male heights")
 x <- 150:200
 y <- dnorm(x = x, mean = mhgtmean, sd = mhgtsd)
 lines(x = x, y = y, col = "blue")
 ```
-??? Exercise 2: Based on this plot, does it appear that the men's height data follow a nearly normal
+Exercise 2: Based on this plot, does it appear that the men's height data follow a nearly normal
 distribution? Explain.
-Based on this visual, there is clear evidence that this follows a normal distribution.
+Based on this visual there is evidence to suggest that it follows a close to normal distribution.
 
 
 ```{r}
@@ -65,7 +65,7 @@ sim_norm <- rnorm(n = length(mdims$hgt), mean = mhgtmean, sd = mhgtsd)
 ```
 ??? Exercise 3: Make a normal (Q-Q) probability plot of sim_norm. Do all of the points fall
 on the line? How does this plot compare to the normal probability plot for the actual data?
-No, not all the points fall on the line. This line is similar to the line for the actual data.
+No, not all the points fall on the line, there are some deviations. But the trend follows the line pretty closely, for the most part and it is safe to assume that this simulation (sim_norm) represents a bienak distribution. Not so suprisingly, this line is somewhat close to the actual data, seen above.
 ```{r}
 qqnorm(sim_norm)
 qqline(sim_norm)
@@ -74,15 +74,15 @@ qqline(sim_norm)
 qqnormsim(mdims$hgt)
 ```
 
-??? Exercise 4: Does the normal probability plot for mdims$hgt look similar to the plots
+ Exercise 4: Does the normal probability plot for mdims$hgt look similar to the plots
 created for the simulated data? That is, do the plots provide evidence that the male heights
 are nearly normal? Explain.
 Yes, the QQplot with the actual data does look very similar to the simulated ones. Some look more simulated than others, but that is almost guaranteed when doing simulations, some will be a more accurate representation of the actual data than others.
 
-??? Exercise 5: Using the same procedure you used to judge the normality of the male height
+Exercise 5: Using the same procedure you used to judge the normality of the male height
 data in Exercises 2 through 4, explain your judgment as to whether or not the male weights
 appear to come from a normal distribution. 
-The do appear to come from a normal distribution, but in the simulation, the plot is more densly populated on the theoretical line as it gets closer to 0 on the x-axis.
+They do appear to come from a normal distribution, but in the simulation, the plot is more densly populated on the theoretical line as it gets closer to 0 on the x-axis.
 ```{r, fig.height = 10, fig.width = 8}}
 qqnorm(mdims$wgt)
 qqline(mdims$wgt)
@@ -100,12 +100,27 @@ qqnormsim(mdims$wgt)
 1 - pnorm(q = 182, mean = mhgtmean, sd = mhgtsd)
 sum(mdims$hgt > 182)/length(mdims$hgt)
 ```
-??? Exercise 6: Write out two probability questions that you would like to answer - one
+Exercise 6: Write out two probability questions that you would like to answer - one
 regarding male heights and one regarding male weights. Calculate those probabilities using
 both the theoretical normal distribution as well as the empirical distribution (four
 probabilities in all). Which variable, height or weight, is closer to normal? Explain your
 reasoning by comparing each empirical distribution to the corresponding theoretical normal
 distribution
+Question 1. Male heights greater than 6 feet
+```{r}
+SixFtInCM <- 72*2.54
+maleMean <- mean(mdims$hgt)
+maleSD <- sd(mdims$hgt)
+```
+
+```{r}
+
+pnorm(q = SixFtInCM, mean = maleMean, sd = maleSD)
+```
+```{r}
+sum(mdims$hgt > SixFtInCM)/length(mdims$hgt)
+```
+
 
 Homework Assignment
 1. Now let's consider some of the other variables in the body dimensions data set. Using the figures on the
