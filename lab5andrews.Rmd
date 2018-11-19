@@ -36,7 +36,7 @@ samp1 <- sample(area, 50)
 the shape, center (mean), and spread (standard deviation) of this sample distribution. How
 does it compare to the population distribution you described in Exercise 1? 
 
-The spread of this set of data is not right-skewed as above and is more uniformly distribued across the x-axis.
+The spread of this set of data is not as right-skewed as above and is more uniformly distribued across the x-axis.
 The mean is only 10 higher then the above data set. The standard deviation of this set is about 50 lower than the above data sample.
 Its shape other than being more uniformly distributed across the x-axis is also bimodal.
 ```{r}
@@ -56,14 +56,35 @@ estimate of the population mean? Why?
 This sample is like the first one in that it is right skewed.
 The median is much lower and the mean is about the same, and the standard deviation is much, much lower.
 As the Size of the sample gets higher it is my belief that the standard deviation would get much lower and the spread shape would become much more defined and vary less.
+I think the more accurate estimate of the population mean would be the one with 1000 as its sample size.
+After doing the calculations, you can see that the standard deviation gets larger between the sample size of 50 to the sample size of 100, then has a dramatic drop
+when it goes from 100 to 1000.
+And as seen when the sample size is 5000, it gets much smaller.
+
 ```{r}
 samp2 <- sample(area, 50)
 
 ```
+
 ```{r}
-hist(samp2)
+sampW100 <- sample(area, 100)
+sampW1000 <- sample(area, 1000)
+```
+
+
+```{r}
+hist(samp2, breaks = 25)
 summary(samp2)
+print("50")
 sd(samp2)
+hist(sampW100)
+summary(sampW100)
+print("100")
+sd(sampW100)
+hist(sampW1000)
+summary(sampW1000)
+print("1000")
+sd(sampW1000)
 ```
 
 ```{r}
@@ -118,7 +139,7 @@ hist(sample_means100, breaks = 20, xlim = xlimits)
 ➡ Exercise 5: When the sample size is larger, what happens to the center (mean) of the
 sampling distribution? What about the spread (standard deviation)?
 
-THe mean is staying the same as the sample size gets higher. And the shapes, while all being unquestionably uniform and symmetrical,
+The mean is staying the same as the sample size gets higher. And the shapes, while all being unquestionably uniform and symmetrical,
 grow inwards towards the mean as the sample size gets higher. It grows steeper and steeper.
 The standard deviation grows smaller and smaller as the sample size increases, as stated before.
 
