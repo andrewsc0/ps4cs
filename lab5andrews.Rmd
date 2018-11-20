@@ -26,7 +26,7 @@ sd(area)
 ```
 ➡ Exercise 1: Describe the shape, center (mean), and spread (standard deviation) of this population
 distribution.
-The shape of this histogram is right skewed. The center is at 1500 and its spread (standard deviation) is around 505.5
+The shape of this histogram is right skewed and unimodal. The center is at 1500 and its spread (standard deviation) is around 505.5
 
 ```{r}
 samp1 <- sample(area, 50)
@@ -53,11 +53,12 @@ mean(samp1)
 of samp2 compare with the mean of samp1? Suppose we took two more samples, one of
 size 100 and one of size 1000. Which would you think would provide a more accurate
 estimate of the population mean? Why?
+
 This sample is like the first one in that it is right skewed.
 The median is much lower and the mean is about the same, and the standard deviation is much, much lower.
 As the Size of the sample gets higher it is my belief that the standard deviation would get much lower and the spread shape would become much more defined and vary less.
 I think the more accurate estimate of the population mean would be the one with 1000 as its sample size.
-After doing the calculations, you can see that the standard deviation gets larger between the sample size of 50 to the sample size of 100, then has a dramatic drop
+After doing the calculations, you can see that the standard deviation gets larger between the sample size of 50 to the sample size of 100, then has a slight increase
 when it goes from 100 to 1000.
 And as seen when the sample size is 5000, it gets much smaller.
 
@@ -104,12 +105,12 @@ hist(sample_means50, breaks = 25)
 (mean), and spread (standard deviation) of the sampling distribution. How would you
 expect the sampling distribution to change if we instead collected 50,000 sample means?
 
-In sample_mean50 there is 5000 elements. The spread of this distribution is uniform and symmetrical.
+In sample_mean50 there is 5000 sampled elements. The spread of this distribution is uniform and symmetrical.
 The mean and medians are very similar to the earlier samples.
 As you could have guessed with a larger sample size that the standard deviation is much, much lower.
 With a collection of sample means 10 times higher then 5000, the median and means are likely to stay similar to what they are now,
 the spread will become more defined around the center of the graph and will become even more symmetrical,
-and the standard deviation will shrink even more in size.
+and the standard deviation should and most likely will shrink even more in size.
 ```{r}
 summary(sample_means50)
 sd(sample_means50)
@@ -139,9 +140,9 @@ hist(sample_means100, breaks = 20, xlim = xlimits)
 ➡ Exercise 5: When the sample size is larger, what happens to the center (mean) of the
 sampling distribution? What about the spread (standard deviation)?
 
-The mean is staying the same as the sample size gets higher. And the shapes, while all being unquestionably uniform and symmetrical,
+The mean moves slightly positively and negatively as the sample size changes. As the amount of samples increases than the mean gets closer and closer to its true mean. And the shapes, while all being unquestionably uniform and symmetrical,
 grow inwards towards the mean as the sample size gets higher. It grows steeper and steeper.
-The standard deviation grows smaller and smaller as the sample size increases, as stated before.
+The standard deviation grows smaller and smaller as the sample size increases.
 
 ```{r}
 summary(sample_means10)
@@ -156,9 +157,9 @@ sd(sample_means100)
 1. Take a random sample of size 50 from price. Using this sample, what is your best point estimate of the
 population mean home price?
 
-The distribution is right skewed.
+The distribution is right skewed and unimodal.
 To the right of the mean, it falls off extremely.
-The best point estimate of the mean with a sample of 50 is 180217.
+The best point estimate of the mean with a sample of 50 is 189893.
 
 ```{r}
 priceSample <- sample(price, 50)
@@ -172,8 +173,8 @@ home price by taking 5000 samples from the population of size 50 and computing 5
 means. Store these means in a vector called sample_price_means50. Plot the data, then describe the
 shape of this simulated sampling distribution. Based on this simulated sampling distribution, what
 would you guess the mean home price of the population to be?
-The shape of this distribution is undoubtedly uniform and symmetrical. The sampling mean is 180748,
-which is higher than the previous sampled mean.
+The shape of this distribution is undoubtedly uniform, unimodal and symmetrical. The sampling mean is 180745,
+which is lower than the previous sampled mean.
 ```{r}
 priceSample50<-rep(0,5000)
 for(i in 1:5000){
@@ -194,10 +195,10 @@ sampling distributions for n = 50 and n = 150. Based on your simulated sampling 
 samples of size n = 150, what would you guess to be the mean sale price of homes in Ames? Finally,
 calculate and report the actual population mean.
 
-The spreads a distributions are similar and the shape is uniform and symmetrical like the other sample if 50.
+The spreads a distributions are similar and the shape is uniform, unimodal and symmetrical like the other sample if 50.
 The only difference is that the 150 shape is steeper tan the one of 50.
-The standard deviation is about cut in half, as you could guess it is much smaller as there is a higher
-sample. Based on the sample of 150 the population mean is 180855, and the actual population mean
+The standard deviation is just about cut in half, as you could guess it is much smaller as there is a higher
+sample. Based on the sample of 150 the population mean is 180903, and the actual population mean
 is 180796.1.
 
 ```{r}
@@ -212,7 +213,7 @@ for(i in 1:5000){
 hist(priceSample150, breaks = 25)
 summary(priceSample150)
 sd(priceSample150)
-mean(price)
+
 ```
 
 4. Of the sampling distributions from #2 and #3, which has a smaller spread (standard deviation)? If
