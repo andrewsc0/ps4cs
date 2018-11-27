@@ -1,0 +1,52 @@
+---
+title: 'Lab 6: The Confidence Level'
+author: "Quentin Terry"
+date: "November 19, 2018"
+output: pdf_document
+---
+```{r setup, include=FALSE, cache=TRUE}
+set.seed(001)
+```
+
+```{r}
+download.file("http://www.openintro.org/stat/data/ames.RData", destfile =
+"ames.RData")
+load("ames.RData")
+```
+
+```{r}
+population <- ames$Gr.Liv.Area
+samp <- sample(population, 60)
+```
+
+##Exercise 1: Plot a histogram of your sample of living areas. Then, describe the shape, center, and spread of your histogram. What would you say is the "typical" living area within your sample? Explain.
+
+```{r}
+hist(samp, main = "Histogram of Sample Living Areas", breaks = 20)
+
+summary(samp)
+sd(samp)
+
+```
+
+-It can be seen that this histogram is slightly left skewed. The center of the histogram is 1450 and the spread is 413 with a high outlier. The typical living area within my sample is 1450 due to the fact that that is the sample mean of my sample. 
+
+##Exercise 2: Would you expect another student's sample distribution to be identical to yours? Would you expect it to be similar? Why or why not?
+
+I dont think another student's sample distribution would be identical to mine, however I do expect it to be similar. This is due to the fact that no student could have the same seed as me, however the values are similar.
+
+```{r}
+sample_mean <- mean(samp)
+
+se <- sd(samp)/sqrt(60)
+lower <- sample_mean - 2 * se
+upper <- sample_mean + 2 * se
+c(lower, upper)
+```
+
+##Exercise 3: For a one-sample t confidence interval to be valid, the sampling distribution of the sample mean must be normally distributed. Check this assumption using the indirect methods demonstrated during class. (Note: If any outliers are present in your sample, you will need to include the relevant calculations to classify the outlier(s) as being either mild or extreme. Extreme outliers prevent us from applying the Central Limit Theorem.) 
+
+```{r}
+boxplot(samp)
+```
+
