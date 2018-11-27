@@ -5,26 +5,70 @@ date: "11/26/2018"
 output: word_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, cache=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
+set.seed(787)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+download.file("http://www.openintro.org/stat/data/ames.RData", destfile =
+"ames.RData")
+load("ames.RData")
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+population <- ames$Gr.Liv.Area
+samp <- sample(population, 60)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+➡ Exercise 1: Plot a histogram of your sample of living areas. Then, describe the shape,
+center, and spread of your histogram. What would you say is the “typical” living area within
+your sample? Explain.
+
+The center is around 1607...
+The shape of the main part of the histogram is symmetrical...
+There looks to be at least one outlier around 3400...
+I would say the typical living area based on the sample is 1632..
+```{r}
+hist(samp,breaks = 25)
+summary(samp)
+sd(samp)
+```
+
+➡ Exercise 2: Would you expect another student’s sample distribution to be identical to
+yours? Would you expect it to be similar? Why or why not?
+
+No, I would not expect another student's sample distribution to be identical. I would
+expect it to be entirely different. But, there is defintely a small chance that
+the sampling distribution would be exactly the same.
+I would expect the sampling another student's sample distribution to be somewhat similar.
+
+```{r}
+sample_mean <- mean(samp)
+```
+
+```{r}
+se <- sd(samp)/sqrt(60)
+lower <- sample_mean - 2 * se
+upper <- sample_mean + 2 * se
+c(lower, upper)
+```
+
+➡ Exercise 3: For a one-sample t confidence interval to be valid, the sampling distribution of
+the sample mean must be normally distributed. Check this assumption using the indirect
+methods demonstrated during class. (Note: If any outliers are present in your sample, you will
+need to include the relevant calculations to classify the outlier(s) as being either mild or extreme.
+Extreme outliers prevent us from applying the Central Limit Theorem.) 
+
+
+
+```{r}
+boxplot(samp)
+shapiro.test(samp)
+qqnorm(samp)
+qqline(samp)
+```
+
+➡ Exercise 4: Report your 95% confidence interval in the form . Then,
+carefully interpret your confidence interval in context.
+
