@@ -26,9 +26,10 @@ center, and spread of your histogram. What would you say is the “typical” li
 your sample? Explain.
 
 The center is around 1607...
-The shape of the main part of the histogram is symmetrical...
+The shape of the main part of the histogram is slightly right skewed...
 There looks to be at least one outlier around 3400...
 I would say the typical living area based on the sample is 1632..
+The spread of this histogram is 545, and just by 'eye-balling' it, there seems to be a high outlier.
 ```{r}
 hist(samp,breaks = 25)
 summary(samp)
@@ -65,10 +66,163 @@ Extreme outliers prevent us from applying the Central Limit Theorem.)
 ```{r}
 boxplot(samp)
 shapiro.test(samp)
-qqnorm(samp)
+qqnorm(samp, main = "QQ plot")
 qqline(samp)
+
+
+summary(samp)
+IQR(samp)
+extremeHigh <- 1975 + (IQR(samp) * 3)
+mildHigh <- 1975 + (IQR(samp) * 1.5)
+
+extremeLow <- 1168 - (IQR(samp) * 3)
+mildLow <- 1168 - (IQR(samp) * 1.5)
+
+extremeHigh
+mildHigh
+mildLow
+extremeLow
 ```
+
+For the histogram, it is right skewed by a little bit.
+The sample has no low outliers, based on the minimum is 810 and the fence for mild low outliers is -42.875.
+There is however a mild high outlier. Our max, 3390 is greater then the mild high fence for outliers (3185.875).
+Just by looking at the box plot as well as the histogram, you can see that there is at least one outlier on the high side.
+Now to the Shapire-Wilk test, our p value is less than the p value for normality (.25), while our p-value is 0.0225.
+
 
 ➡ Exercise 4: Report your 95% confidence interval in the form . Then,
 carefully interpret your confidence interval in context.
+
+1491.553 < µ < 1772.880
+We are 95% confident that the true mean of living area of houses in this data set is between 1491.553 and 1772.880.
+
+➡ Exercise 5: What does the phrase “95% confident” mean? In other words, give an interpretation of
+the confidence level.
+
+It means that we are 95% confident that in between the lower and upper limit, lies the population mean.
+So, when confidence decreases (less than 95%) the interval gets larger.
+Vice Versa, when the confidence interval grows (greater than 95%) the interval gets smaller.
+In this example, the true population mean does actually lie between our lower and upper limit.
+
+1491.553 < 1499.69 < 1772.880
+
+
+➡ Exercise 6: Did your confidence interval capture the true mean living area of houses in
+Ames? Explain.
+
+Yes my confidence interval did capture the true mean living area of houses in Ames.
+( 1491.553 < 1499.69 < 1772.880 )
+Based on the above questions answer and this data demonstrated on the line above, the confidence interval
+we produced does capture the true mean.
+
+
+➡ Exercise 7: Each student in your class section should have gotten a slightly different
+confidence interval. What proportion of those intervals would you expect to successfully
+capture the true population mean? Why? Write your confidence interval on the board.
+When everybody has done so, write down the confidence intervals created by all of the
+students in your class section and calculate the proportion of these intervals that
+successfully captured the true population mean. How does this proportion compare to the
+expected proportion? Why might it be different? Explain.
+
+```{r}
+43 * 0.95
+```
+
+
+Out of the data we have, there were 43 submitted confidence intervals.
+95 percent of 43 is 40.85, so we can round up to 41.
+Based on this calculation I would expect 41 submitted confidence intervals to capture the true population mean.
+It actually turns out that 42 out of 43 submitted confidence intervals capture the true population mean.
+
+```{r}
+samp_mean <- rep(NA, 50)
+samp_sd <- rep(NA, 50)
+n <- 60
+```
+
+```{r}
+for(i in 1:50){
+samp <- sample(population, n) # obtain a sample of size n = 60 from the
+population
+samp_mean[i] <- mean(samp) # save sample mean in ith element of samp_mean
+samp_sd[i] <- sd(samp) # save sample sd in ith element of samp_sd
+}
+```
+
+```{r}
+lower <- samp_mean - 2 * samp_sd/sqrt(n)
+upper <- samp_mean + 2 * samp_sd/sqrt(n)
+```
+
+```{r}
+c(lower[1], upper[1])
+```
+
+
+Homework Assignment
+1. Using the following function (which was downloaded with the data set), plot all fifty of your 95%
+confidence intervals:
+
+```{r}
+plot_ci(lower, upper, mean(population))
+```
+
+
+What proportion of your confidence intervals include the true population mean? Is this proportion
+exactly equal to the confidence level? Why might it differ?
+
+47 of the 50 obtain the true populatino mean.
+This is just about equal to the confidence level.
+95 percent of 50 is 47.5, so if we rounded down, then it is equal. But it is very close to be exactly 95%.
+This may differ because it is a confidecnce interval of a sample of the true population mean, not the actual true population mean.
+
+2. What is the appropriate critical t value for a 98% confidence level with 59 df? Include R calculations
+for finding this critical t. (It could be helpful to also find the critical t using the invT command on
+your graphing calculator. Confirm that you get the same result using both methods to ensure that you
+used the correct R command.)
+
+```{r}
+qt(.99,59)
+```
+
+
+
+3. Construct fifty 98% confidence intervals. You do not need to obtain new samples; simply calculate
+new intervals based on the sample means and standard deviations you have already collected; you
+only need to change the critical t used in the calculations (it was 2 for a 95% confidence level and 59
+df). Using the plot_ci function, plot all fifty intervals and calculate the proportion of intervals that
+include the true population mean. How does this percentage compare to the confidence level?
+
+```{r}
+newMean <- rep(NA, 50)
+newSD <- rep(NA, 50)
+num <- 60
+```
+
+```{r}
+for(i in 1:50){
+newSamp <- sample(population, num) # obtain a sample of size n = 60 from the
+population
+newMean[i] <- mean(newSamp) # save sample mean in ith element of samp_mean
+newSD[i] <- sd(newSamp) # save sample sd in ith element of samp_sd
+}
+```
+
+```{r}
+newLower <- newMean - 2 * newSD/sqrt(num)
+newUpper <- newMean + 2 * newSD/sqrt(num)
+```
+
+```{r}
+c(newLower[1], newUpper[1])
+```
+
+```{r}
+plot_ci(newLower, newUpper, mean(population))
+```
+
+49 out of 50 intervals contain the true population mean.
+This is exactly 98%.
+
 
