@@ -195,34 +195,37 @@ df). Using the plot_ci function, plot all fifty intervals and calculate the prop
 include the true population mean. How does this percentage compare to the confidence level?
 
 ```{r}
-newMean <- rep(NA, 50)
-newSD <- rep(NA, 50)
-num <- 60
+samp_mean <- rep(NA, 50)
+samp_sd <- rep(NA, 50)
+n <- 60
 ```
 
 ```{r}
+
 for(i in 1:50){
-newSamp <- sample(population, num) # obtain a sample of size n = 60 from the
+samp <- sample(population, n) # obtain a sample of size n = 60 from the
 population
-newMean[i] <- mean(newSamp) # save sample mean in ith element of samp_mean
-newSD[i] <- sd(newSamp) # save sample sd in ith element of samp_sd
+samp_mean[i] <- mean(samp) # save sample mean in ith element of samp_mean
+samp_sd[i] <- sd(samp) # save sample sd in ith element of samp_sd
 }
 ```
 
 ```{r}
-newLower <- newMean - 2 * newSD/sqrt(num)
-newUpper <- newMean + 2 * newSD/sqrt(num)
+lower <- samp_mean - 2 * samp_sd/sqrt(n)
+upper <- samp_mean + 2 * samp_sd/sqrt(n)
 ```
 
 ```{r}
-c(newLower[1], newUpper[1])
+c(lower[1], upper[1])
 ```
 
 ```{r}
-plot_ci(newLower, newUpper, mean(population))
+plot_ci(lower, upper, mean(population))
 ```
 
-49 out of 50 intervals contain the true population mean.
-This is exactly 98%.
+47 out of 50 intervals contain the true population mean.
+This is severely off of 98 percent.
+
+
 
 
